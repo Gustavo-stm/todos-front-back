@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h2>My Todos</h2>
+<form>
+    <label for="priority">Priority</label>
+    <input onkeyup="filterTodos()" id="priority" placeholder="Priority"/>
+    <label for="task">Task</label>
+    <input onkeyup="filterTodos()" id="task" placeholder="Task"/>
+    <label for="task">Assigned to</label>
+    <input onkeyup="filterTodos()" id="assigned" placeholder="My friend (1) / Me (2)"/>
+
+    <p>
+        <button type="button" onclick="showPage('minus')">Prev</button>
+        <button type="button" onclick="showPage('plus')">Next</button>
+    </p>
+</form>
+<div>
+    <h3>Showing todos: <span id="qty"></span></h3>
+    <ul id="todos">
+    </ul> 
+</div>   
+</body>
+<style>
+    button{margin-left:10px;}
+
+    form, h2, div, p {margin: 20px auto; text-align:center;}
+
+</style>
+<script type="text/javascript" src="main.js"></script>
+</html>
