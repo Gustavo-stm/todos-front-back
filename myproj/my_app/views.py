@@ -59,16 +59,6 @@ def filtering(req):
     except:
         return HttpResponse(json.dumps({'error':'Something is wrong'}))
 
-    # try:
-    #     res = cur.execute(f'SELECT * FROM boozt3 WHERE {category}="{val}" LIMIT 100')
-    #     res = res.fetchall()
-    #     connexion.close()
-    #     return HttpResponse(json.dumps({'todos':res}))
-    
-    # except:
-    #     return HttpResponse(json.dumps({'error':'Something is wrong'}))
-
-    
 
 def getTodos(req):
 
