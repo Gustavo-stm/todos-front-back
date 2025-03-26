@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-<h2>My Todos</h2>
 <form>
+    <p class="title">Filter Todos</p>
     <label for="priority">Priority</label>
     <input onkeyup="filterTodos()" id="priority" placeholder="Priority"/>
     <label for="task">Task</label>
@@ -19,17 +19,80 @@
         <button type="button" onclick="showPage('minus')">Prev</button>
         <button type="button" onclick="showPage('plus')">Next</button>
     </p>
+    <button onclick="openCreate()">Create to do</button>
 </form>
 <div>
-    <h3>Showing todos: <span id="qty"></span></h3>
+    <h3>Todos <span id="qty"></span></h3>
     <ul id="todos">
     </ul> 
 </div>   
 </body>
 <style>
-    button{margin-left:10px;}
 
-    form, h2, div, p {margin: 20px auto; text-align:center;}
+    *{font-family: Verdana, Geneva, Tahoma, sans-serif;}
+
+    body{ background-color:rgb(253, 247, 247);}
+    p.title, h3{
+        color:white;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+    button{margin-left:10px; 
+    color: white;
+    background-color: darkgreen;
+    border:none;
+    border-radius:5px;
+    padding:5px 10px;}
+
+    input{outline:white;
+        border-radius: 5px;
+        border-color: white;
+       
+    
+    &::placeholder{
+        font-size: 0.8em;;
+    }}
+    
+    label{
+      color:rgb(255,255,255);
+    }
+
+    div{
+        width:50%;
+        max-width: 500px;
+        margin:10px auto;
+        background-color: rgba(0,0,0,0.5);
+        padding: 10px 10px;
+        border-radius:5px;
+    }
+
+    ul{padding-left:0; 
+        list-style-type: none;  
+    }
+    li{
+        color:white;
+        background-color: rgba(0,0,0,0.4);
+        margin: 10px 0;
+        border-radius:4px;
+        padding:5px 10px;
+        font-size: 0.7em;
+        }
+
+    form{display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    height:fit-content;
+    padding:20px;
+    width:50%;
+    max-width: 500px;
+    font-size: 0.7em;
+    border-radius:5px;
+    border:1px solid grey;
+    background-color: rgb(0,0,0,0.2);
+    margin:0 auto;}
+
+    form, h2, div, p, label, input, button {margin: 5px auto; text-align:center;}
 
 </style>
 <script type="text/javascript" src="main.js"></script>

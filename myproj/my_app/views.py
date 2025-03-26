@@ -5,6 +5,8 @@ import sqlite3
 import pdb
 import datetime
 import random
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 
@@ -12,6 +14,28 @@ def initiateDb():
     connexion = sqlite3.connect('to_do_list.db')
     cur = connexion.cursor()
     return cur,connexion
+
+@csrf_exempt
+def createTodo(req):
+
+    body = json.loads(req.body)
+    prio = int(body['prio'])
+    task = body['task']
+    assigned = int(body['assigned'])
+
+    id = random.randint(1,10000)
+
+    cur,connexion = initiateDb()
+    
+    try:
+        cur.execute(f"INSERT INTO mytodos VALUES('{task}','undone',{id},'2022-05-17 02:26:38.276787',{prio},1,{assigned})")
+        connexion.commit()
+        
+        return HttpResponse(json.dumps({'msg':'Successfully created product'}))
+    
+    except:
+        connexion.close()
+        return HttpResponse(json.dumps({'error':'Something went wrong'}))
 
 
 def filtering(req):

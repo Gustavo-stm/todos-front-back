@@ -2,7 +2,9 @@
 let filteredPage = 1
 let page = 1
 
-
+function openCreate(){
+    window.open('createTodos.html')
+}
 // This 2 functions get data from the backend, depending on if it is all the data
 // or just some filtered data
 
@@ -32,7 +34,7 @@ function showData(data){
     document.getElementById('todos').innerHTML = ""
     data = data.todos
     data.forEach(el=>{
-       document.getElementById('todos').innerHTML += `<p>${el[0]} - ${el[1]} - Priority${el[4]}</p>`
+       document.getElementById('todos').innerHTML += `<li>${el[0]} - ${el[1]} - Priority${el[4]}</li>`
     })
   }
 
