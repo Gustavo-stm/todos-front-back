@@ -25,10 +25,12 @@ def createTodo(req):
 
     id = random.randint(1,10000)
 
-    cur,connexion = initiateDb()
+    cur, connexion = initiateDb()
+
+    newTodo = (f'{task}','undone', id, '2022-05-17 02:26:38.276787', prio, 1, assigned, )
     
     try:
-        cur.execute(f"INSERT INTO mytodos VALUES('{task}','undone',{id},'2022-05-17 02:26:38.276787',{prio},1,{assigned})")
+        cur.execute(f"INSERT INTO mytodos VALUES (?,?,?,?,?,?,?)", newTodo)
         connexion.commit()
         
         return HttpResponse(json.dumps({'msg':'Successfully created product'}))

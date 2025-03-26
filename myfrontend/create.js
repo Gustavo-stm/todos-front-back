@@ -12,6 +12,7 @@ function createTodo(){
         method: "POST",
         body: JSON.stringify({ prio,task,assigned })})
     .then(res=>res.json())
-    .then(res=>console.log(res))
+    .then(res=>{if (res.error){console.log(res.error)} 
+        else{window.open('index.html')}})
     .catch(err=>console.log(err))
 }

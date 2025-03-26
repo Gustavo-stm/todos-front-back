@@ -3,3 +3,4 @@
 /myproj/to_do_list.db/
 /myproj/db.sqlite3
 /myproj/myproj/__pycache__
+myproj/myapp/__pycache__
