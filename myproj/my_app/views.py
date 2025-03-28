@@ -16,6 +16,25 @@ def initiateDb():
     return cur,connexion
 
 @csrf_exempt
+def deleteTodo(req):
+    
+    id = req.GET.get('id')
+    
+    cur, connexion = initiateDb()
+
+    query = f"DELETE FROM mytodos WHERE id={id}"
+
+    try:
+        cur.execute(query)
+        connexion.commit()
+        connexion.close()
+        return HttpResponse(json.dumps({'msg':'Successfully deleted product'}))
+    
+    except:
+        connexion.close()
+        return HttpResponse(json.dumps({'error':'Something went wrong'}))
+
+@csrf_exempt
 def createTodo(req):
 
     body = json.loads(req.body)
