@@ -19,6 +19,7 @@ def initiateDb():
 def createTodo(req):
 
     body = json.loads(req.body)
+    
     prio = int(body['prio'])
     task = body['task']
     assigned = int(body['assigned'])

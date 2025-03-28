@@ -6,93 +6,139 @@
     <title>Document</title>
 </head>
 <body>
-<form>
-    <p class="title">Filter Todos</p>
-    <label for="priority">Priority</label>
-    <input onkeyup="filterTodos()" id="priority" placeholder="Priority"/>
-    <label for="task">Task</label>
-    <input onkeyup="filterTodos()" id="task" placeholder="Task"/>
-    <label for="task">Assigned to</label>
-    <input onkeyup="filterTodos()" id="assigned" placeholder="My friend (1) / Me (2)"/>
+    <header>
+        <h3>Todos App</h3>
+    </header>
+    <div id="container">
+        <form>
+            <p class="title">Filter Todos</p>
+            <label for="priority">Priority</label>
+            <input onkeyup="resetPages();filterTodos();" id="priority" placeholder="Priority"/>
+            <label for="task">Task</label>
+            <input onkeyup="resetPages();filterTodos();" id="task" placeholder="Task"/>
+            <label for="task">Assigned to</label>
+            <input onkeyup="resetPages();filterTodos();" id="assigned" placeholder="My friend (1) / Me (2)"/>
 
-    <p>
-        <button type="button" onclick="showPage('minus')">Prev</button>
-        <button type="button" onclick="showPage('plus')">Next</button>
-    </p>
-    <button onclick="openCreate()">Create to do</button>
-</form>
-<div>
-    <h3>Todos <span id="qty"></span></h3>
-    <ul id="todos">
-    </ul> 
-</div>   
+            <p>
+                <button type="button" onclick="showPage('minus')">Prev</button>
+                <button type="button" onclick="showPage('plus')">Next</button>
+            </p>
+            <button onclick="toggleView('create-todo')">Create to do</button>
+        </form>
+        <div id="todos-container">
+            <p id="qty">Showing 0 - 10</p>
+            <ul id="todos">
+            </ul> 
+        </div> 
+    </div>  
 </body>
 <style>
 
     *{font-family: Verdana, Geneva, Tahoma, sans-serif;}
 
-    body{ background-color:rgb(253, 247, 247);}
+    #container{ background-color:white;
+                      display:flex;
+                      align-items: start;
+                      justify-content: center;
+                      width:100vw;
+                      padding:10px;}
+
     p.title, h3{
-        color:white;
         font-size: 1.1em;
         font-weight: bold;
+        text-align: center;
     }
-    button{margin-left:10px; 
-    color: white;
-    background-color: darkgreen;
-    border:none;
-    border-radius:5px;
-    padding:5px 10px;}
 
-    input{outline:white;
+    form{display:flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items:center;
+        height:fit-content;
+        width:50%;
+        max-width: 300px;
+        font-size: 0.7em;
+        border-radius:5px;
+        padding:20px;
+        border:1px solid lightgrey;
+        background-color: rgba(247, 240, 240, 0.2);
+        margin:0 20px;}
+
+    button{margin-left:10px; 
+            color: white;
+            background-color: darkgreen;
+            border:none;
+            border-radius:5px;
+            padding:5px 10px;
+            font-size:0.8em;
+
+        &:hover{
+            cursor:pointer;
+            background-color: rgb(37, 167, 37);;
+        }
+    }
+
+    input{
         border-radius: 5px;
-        border-color: white;
+        padding:6px 0px;
+        border:0.5px solid lightgrey;
+        box-shadow: 2px 4px 8px lightgrey;;
        
-    
+    &:focus{
+        outline:1px solid lightgrey;
+    }
     &::placeholder{
         font-size: 0.8em;;
     }}
-    
-    label{
-      color:rgb(255,255,255);
+
+    #back-button{
+        color:blue;
+        text-decoration: underline;
+        font-size: 0.8em;
+        margin:10px;
+        padding:4px 10px;
+        border-radius:5px;
+
+        &:hover{cursor:pointer;
+          background-color: rgb(235, 234, 234);
+        }
     }
 
-    div{
-        width:50%;
-        max-width: 500px;
-        margin:10px auto;
-        background-color: rgba(0,0,0,0.5);
-        padding: 10px 10px;
-        border-radius:5px;
+    #todos-container{
+        max-width: 300px;
+        border:1px solid lightgrey;
+        border-radius:10px;
+        padding:10px;
     }
 
     ul{padding-left:0; 
-        list-style-type: none;  
+       margin:0;
+       list-style-type: none; 
     }
     li{
         color:white;
         background-color: rgba(0,0,0,0.4);
-        margin: 10px 0;
+        margin-bottom: 10px;
         border-radius:4px;
         padding:5px 10px;
         font-size: 0.7em;
+        width:250px;
+        box-shadow:2px 2px 2px lightgrey;
+        text-align: left;
+        height:fit-content;
+
+        &:hover{
+            cursor:pointer;
+            color:grey;
+            background-color: lightgrey;
+            transform: scale(1.025);
+        }
         }
 
-    form{display:flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items:center;
-    height:fit-content;
-    padding:20px;
-    width:50%;
-    max-width: 500px;
-    font-size: 0.7em;
-    border-radius:5px;
-    border:1px solid grey;
-    background-color: rgb(0,0,0,0.2);
-    margin:0 auto;}
+    #qty{font-size:0.8em;
+        padding:4px;
+         color:grey;}
 
-    form, h2, div, p, label, input, button {margin: 5px auto; text-align:center;}
+    h2, p, label, input, button {margin: 5px auto; text-align:center;}
 
 </style>
 <script type="text/javascript" src="main.js"></script>

@@ -2,9 +2,76 @@
 let filteredPage = 1
 let page = 1
 
-function openCreate(){
-    window.open('createTodos.html')
+function createTodo(){
+
+    let prio = document.getElementById('priority').value
+
+    let task = document.getElementById('task').value
+
+    let assigned = document.getElementById('assigned').value
+
+    fetch("http://127.0.0.1:8000/todos/create", {
+        method: "POST",
+        body: JSON.stringify({ prio,task,assigned })})
+    .then(res=>res.json())
+    .then(res=>{if (res.error){console.log(res.error)} 
+        else{toggleView('show-todos')}})
+    .catch(err=>console.log(err))
 }
+
+function toggleView(action){
+
+    resetPages()
+
+    document.getElementById('container').innerHTML = ""
+
+    if (action ==='create-todo'){
+        document.getElementById('container').innerHTML += `
+            <form>
+                <label for="priority">Priority</label>
+                <input  id="priority" placeholder="Priority"/>
+                <label for="task">Task</label>
+                <input  id="task" placeholder="Task"/>
+                <label for="assigned">Assigned to</label>
+                <input  id="assigned" placeholder="My friend (1) / Me (2)"/>
+
+                <button type="button" onclick="createTodo()" type="button">Submit</button>
+            <p id="back-button" onclick="toggleView('back');"><< Go Back </p>
+            </form>
+            `
+    }
+
+    else{
+        document.getElementById('container').innerHTML += `<form>
+                                                    <p class="title">Filter Todos</p>
+                                                    <label for="priority">Priority</label>
+                                                    <input onkeyup="resetPages();filterTodos();" id="priority" placeholder="Priority"/>
+                                                    <label for="task">Task</label>
+                                                    <input onkeyup="resetPages();filterTodos();" id="task" placeholder="Task"/>
+                                                    <label for="task">Assigned to</label>
+                                                    <input onkeyup="resetPages();filterTodos();" id="assigned" placeholder="My friend (1) / Me (2)"/>
+
+                                                    <p>
+                                                        <button type="button" onclick="showPage('minus')">Prev</button>
+                                                        <button type="button" onclick="showPage('plus')">Next</button>
+                                                    </p>
+                                                    <button onclick="toggleView('create-todo')">Create to do</button>
+                                                </form>
+                                                <div id="todos-container">
+                                                    <p id="qty">Showing 0 - 10</p>
+                                                    <ul id="todos">
+                                                    </ul> 
+                                                </div> `
+    }
+
+    getData()
+}
+
+function resetPages(){
+    page = 1
+    filteredPage = 1
+}
+
 // This 2 functions get data from the backend, depending on if it is all the data
 // or just some filtered data
 
@@ -34,7 +101,7 @@ function showData(data){
     document.getElementById('todos').innerHTML = ""
     data = data.todos
     data.forEach(el=>{
-       document.getElementById('todos').innerHTML += `<li>${el[0]} - ${el[1]} - Priority${el[4]}</li>`
+       document.getElementById('todos').innerHTML += `<li class="todo">${el[0]} - ${el[1]} - Priority${el[4]}</li>`
     })
   }
 
@@ -54,7 +121,11 @@ function filterTodos(){
     if (!prio) prio = " "
     if (!assigned) assigned = " "
 
-    if (task===" " && prio ===" " && assigned == " ") { getData(); return}
+    if (task===" " && prio ===" " && assigned == " ") { 
+        resetPages();
+        getData();
+        showQty('todos') 
+        return}
 
    
     getFilteredData(task, prio, assigned)
@@ -69,7 +140,11 @@ function filterTodos(){
 
 function showFilteredPage(action){
 
+    let todosinUi = [...document.getElementsByClassName('todo')]
+
     if (action==='minus' && filteredPage ==1) return
+
+    else if (action ==='plus' && todosinUi.length < 10) return
 
     filteredPage = action ==='minus'? filteredPage-1: filteredPage + 1
 
@@ -87,9 +162,12 @@ function showPage(action){
     ){
         showFilteredPage(action); return}
 
-    if (action==='minus' && (page ==1 && filteredPage==1)) return
+    let todosinUi = [...document.getElementsByClassName('todo')]
 
-        page = action ==='minus'? page-1:page+1 
+    if (action==='minus' && (page ==1 && filteredPage==1)) return
+    else if (action==='plus' && todosinUi.length < 10) return
+
+    page = action ==='minus'? page-1:page+1 
     
 
    getData()
@@ -99,8 +177,8 @@ function showPage(action){
 // Finally this function shows the results quantity 0-10, 10-20...
 
 function showQty(datatype){
-    if (datatype==='filtered') document.getElementById('qty').innerHTML = `${(filteredPage*10) -10} to ${filteredPage*10}`
-    else {document.getElementById('qty').innerHTML = `${(page*10) -10} to ${page*10}`}
+    if (datatype==='filtered') document.getElementById('qty').innerHTML = `Showing ${(filteredPage*10) -10} to ${filteredPage*10}`
+    else {document.getElementById('qty').innerHTML = `Showing ${(page*10) -10} to ${page*10}`}
 }
 
 
