@@ -121,7 +121,7 @@ ul {
 
 li {
     color: white;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgb(178, 160, 160);
     margin-bottom: 10px;
     border-radius: 4px;
     padding: 5px 10px;
@@ -142,7 +142,7 @@ li {
     }
 }
 
-i {
+button.icon-button {
     color: rgb(156, 50, 50);
     padding: 3px;
     position: absolute;

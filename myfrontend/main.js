@@ -2,6 +2,8 @@
 let filteredPage = 1
 let page = 1
 
+console.log('hello 1')
+
 function createTodo() {
 
     let prio = document.getElementById('priority').value
@@ -43,11 +45,18 @@ function toggleView(action) {
                 <input  id="task" placeholder="Task"/>
                 <label for="assigned">Assigned to</label>
                 <input  id="assigned" placeholder="My friend (1) / Me (2)"/>
-
-                <button type="button" onclick="createTodo()" type="button">Submit</button>
-            <p id="back-button" onclick="toggleView('back');"><< Go Back </p>
+                <button id="submit-todo" type="submit">Create</button>
+                <p id="back-button" onclick="toggleView('back');"><< Go Back </p>
             </form>
             `
+
+        setTimeout(() => {
+            document.getElementById('submit-todo').addEventListener('click', (e) => {
+                e.preventDefault()
+                createTodo()
+            })
+        }, 1000)
+
     }
 
     else {
@@ -86,7 +95,7 @@ function resetPages() {
 function deleteTodo(todoId) {
 
     fetch(`http://127.0.0.1:8000/todos/delete?id=${Number(todoId)}`, {
-        method: 'POST'
+        method: 'DELETE'
     })
         .then(res => res.json())
         .then(res => getData())
@@ -123,7 +132,11 @@ function showData(data) {
     document.getElementById('todos').innerHTML = ""
     data = data.todos
     data.forEach(el => {
-        document.getElementById('todos').innerHTML += `<li class="todo">${el[0]} - ${el[1]} - Priority${el[4]}<i type="button" id="delete-${el[2]}" onclick="deleteTodo(${el[2]})" class="fa-solid fa-trash"></i></li>`
+        document.getElementById('todos').innerHTML += `<li class="todo">${el[0]} - ${el[1]} - Priority${el[4]}
+            <button onsubmit="return false;" class="icon-button" type="button" onclick="deleteTodo(${el[2]})">
+                <i id="delete-${el[2]}"  class="fa-solid fa-trash"></i>
+            </button>
+        </li>`
     })
 }
 
