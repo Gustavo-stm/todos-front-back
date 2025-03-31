@@ -5,5 +5,6 @@ from . import views
 urlpatterns = [
     path('read/filter', views.filtering),
     path('read', views.getTodos),
-    path('create', views.createTodo)
+    path('create', views.createTodo),
+    path('delete', views.deleteTodo),
 ]

@@ -1,145 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">  
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todos</title>
+    <link rel="icon" href="assets/check.svg" type="image/icon type">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c2296859bb.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header>
         <h3>Todos App</h3>
     </header>
     <div id="container">
+        <!-- <img src="assets/agenda.jpg" alt="agenda-girl" /> -->
         <form>
             <p class="title">Filter Todos</p>
             <label for="priority">Priority</label>
-            <input onkeyup="resetPages();filterTodos();" id="priority" placeholder="Priority"/>
+            <input onkeyup="resetPages();filterTodos();" id="priority" placeholder="Priority" />
             <label for="task">Task</label>
-            <input onkeyup="resetPages();filterTodos();" id="task" placeholder="Task"/>
+            <input onkeyup="resetPages();filterTodos();" id="task" placeholder="Task" />
             <label for="task">Assigned to</label>
-            <input onkeyup="resetPages();filterTodos();" id="assigned" placeholder="My friend (1) / Me (2)"/>
+            <input onkeyup="resetPages();filterTodos();" id="assigned" placeholder="My friend (1) / Me (2)" />
 
             <p>
                 <button type="button" onclick="showPage('minus')">Prev</button>
                 <button type="button" onclick="showPage('plus')">Next</button>
             </p>
-            <button onclick="toggleView('create-todo')">Create to do</button>
+            <button type="button" onclick="toggleView('create-todo')">Create to do</button>
         </form>
         <div id="todos-container">
             <p id="qty">Showing 0 - 10</p>
             <ul id="todos">
-            </ul> 
-        </div> 
-    </div>  
+            </ul>
+        </div>
+    </div>
 </body>
-<style>
-
-    *{font-family: Verdana, Geneva, Tahoma, sans-serif;}
-
-    #container{ background-color:white;
-                      display:flex;
-                      align-items: start;
-                      justify-content: center;
-                      width:100vw;
-                      padding:10px;}
-
-    p.title, h3{
-        font-size: 1.1em;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    form{display:flex;
-        flex-direction:column;
-        justify-content: center;
-        align-items:center;
-        height:fit-content;
-        width:50%;
-        max-width: 300px;
-        font-size: 0.7em;
-        border-radius:5px;
-        padding:20px;
-        border:1px solid lightgrey;
-        background-color: rgba(247, 240, 240, 0.2);
-        margin:0 20px;}
-
-    button{margin-left:10px; 
-            color: white;
-            background-color: darkgreen;
-            border:none;
-            border-radius:5px;
-            padding:5px 10px;
-            font-size:0.8em;
-
-        &:hover{
-            cursor:pointer;
-            background-color: rgb(37, 167, 37);;
-        }
-    }
-
-    input{
-        border-radius: 5px;
-        padding:6px 0px;
-        border:0.5px solid lightgrey;
-        box-shadow: 2px 4px 8px lightgrey;;
-       
-    &:focus{
-        outline:1px solid lightgrey;
-    }
-    &::placeholder{
-        font-size: 0.8em;;
-    }}
-
-    #back-button{
-        color:blue;
-        text-decoration: underline;
-        font-size: 0.8em;
-        margin:10px;
-        padding:4px 10px;
-        border-radius:5px;
-
-        &:hover{cursor:pointer;
-          background-color: rgb(235, 234, 234);
-        }
-    }
-
-    #todos-container{
-        max-width: 300px;
-        border:1px solid lightgrey;
-        border-radius:10px;
-        padding:10px;
-    }
-
-    ul{padding-left:0; 
-       margin:0;
-       list-style-type: none; 
-    }
-    li{
-        color:white;
-        background-color: rgba(0,0,0,0.4);
-        margin-bottom: 10px;
-        border-radius:4px;
-        padding:5px 10px;
-        font-size: 0.7em;
-        width:250px;
-        box-shadow:2px 2px 2px lightgrey;
-        text-align: left;
-        height:fit-content;
-
-        &:hover{
-            cursor:pointer;
-            color:grey;
-            background-color: lightgrey;
-            transform: scale(1.025);
-        }
-        }
-
-    #qty{font-size:0.8em;
-        padding:4px;
-         color:grey;}
-
-    h2, p, label, input, button {margin: 5px auto; text-align:center;}
-
-</style>
 <script type="text/javascript" src="main.js"></script>
+
 </html>
