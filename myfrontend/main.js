@@ -98,7 +98,7 @@ function deleteTodo(todoId) {
         method: 'DELETE'
     })
         .then(res => res.json())
-        .then(res => getData())
+        .then(res => {if (res.msg) {getData()} else {alert(res.error)}})
         .catch(err => console.log(err))
 }
 

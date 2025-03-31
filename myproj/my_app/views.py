@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import json
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 import sqlite3
 import pdb
 import datetime
@@ -22,17 +22,26 @@ def deleteTodo(req):
     
     cur, connexion = initiateDb()
 
-    query = f"DELETE FROM mytodos WHERE id={id}"
-
     try:
-        cur.execute(query)
-        connexion.commit()
-        connexion.close()
-        return HttpResponse(json.dumps({'msg':'Successfully deleted product'}))
+        
+        potentialTodo = cur.execute(f"SELECT * FROM mytodos WHERE id={id}")
+        potentialTodo = potentialTodo.fetchone()
+        
+        if potentialTodo:
+            query = f"DELETE FROM mytodos WHERE id={id}"
+            cur.execute(query)
+            connexion.commit()
+            connexion.close()
+            return HttpResponse(json.dumps({'msg':'Successfully deleted product'}))
+        else:
+            raise ValueError('Id not existing')
     
-    except:
+    except ValueError as e:
         connexion.close()
-        return HttpResponse(json.dumps({'error':'Something went wrong'}))
+        response_data = {
+            "error": f"{e}"
+        }
+        return JsonResponse(response_data, status=400)
 
 @csrf_exempt
 def createTodo(req):
