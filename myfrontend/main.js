@@ -2,7 +2,17 @@
 let filteredPage = 1
 let page = 1
 
-console.log('hello 1')
+let todoToUpdate;
+let allTodos;
+
+
+function updateTodo(todoId){
+
+  todoToUpdate = allTodos.filter(todo=>todo[2] === todoId)
+  todoToUpdate = [...todoToUpdate[0]]
+  
+  toggleView('update')
+}
 
 function createTodo() {
 
@@ -59,6 +69,22 @@ function toggleView(action) {
 
     }
 
+    else if (action=='update'){
+
+        document.getElementById('container').innerHTML += `
+            <form>
+                <label for="priority">Priority</label>
+                <input  id="priority" value="${todoToUpdate[4]}"/>
+                <label for="task">Task</label>
+                <input  id="task" value="${todoToUpdate[0]}"/>
+                <label for="status">Status</label>
+                <input id="status" value="${todoToUpdate[1]}"/>
+                <button id="submit-todo" type="submit">Update</button>
+                <p id="back-button" onclick="toggleView('back');"><< Go Back </p>
+            </form>
+            `
+    }
+
     else {
         document.getElementById('container').innerHTML += `<form>
                                                     <p class="title">Filter Todos</p>
@@ -110,7 +136,7 @@ function getData() {
 
     fetch(`http://127.0.0.1:8000/todos/read?page=${page}`)
         .then(res => res.json())
-        .then(res => showData(res))
+        .then(res => {allTodos = res.todos; showData(res)})
         .catch(err => console.log(err))
 }
 
@@ -135,6 +161,9 @@ function showData(data) {
         document.getElementById('todos').innerHTML += `<li class="todo">${el[0]} - ${el[1]} - Priority${el[4]}
             <button onsubmit="return false;" class="icon-button" type="button" onclick="deleteTodo(${el[2]})">
                 <i id="delete-${el[2]}"  class="fa-solid fa-trash"></i>
+            </button>
+            <button class="icon-button" type="button" onclick="updateTodo(${el[2]})">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
         </li>`
     })
