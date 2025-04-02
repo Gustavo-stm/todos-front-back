@@ -1,4 +1,5 @@
 
+// Some global variables that are useful for further usage
 let filteredPage = 1
 let page = 1
 
@@ -6,14 +7,46 @@ let todoToUpdate;
 let allTodos;
 
 
-function updateTodo(todoId){
+// This function to send PUT request to update existing todo
+function submitUpdateTodo(todoId) {
 
-  todoToUpdate = allTodos.filter(todo=>todo[2] === todoId)
-  todoToUpdate = [...todoToUpdate[0]]
-  
-  toggleView('update')
+    let prio = document.getElementById('priority').value
+    let task = document.getElementById('task').value
+    let status = document.getElementById('status').value
+
+    // All 3 parameters required to update a todo
+    if (!prio || !task || !status) { alert('You need to set all parameters'); return }
+
+    fetch(`http://127.0.0.1:8000/todos/update?id=${todoId}`,
+        {
+            method: "PUT",
+            body: JSON.stringify({ prio, task, status })
+        }
+    )
+        .then(res => res.json())
+        .then(res => {
+
+            // Show error on update, or...
+            if (res.error) { console.log(res.error) }
+
+            // ...if the update was successfull, it goes back to read todos again
+            else { toggleView('show-todos') }
+        })
+        .catch(err => console.log(err))
+
 }
 
+// Identifying the todo to update and showing the update form to fill 
+// with todo' s values
+function updateTodo(todoId) {
+
+    todoToUpdate = allTodos.filter(todo => todo[2] === todoId)
+    todoToUpdate = [...todoToUpdate[0]]
+
+    toggleView('update')
+}
+
+// The function to create a todo
 function createTodo() {
 
     let prio = document.getElementById('priority').value
@@ -38,7 +71,7 @@ function createTodo() {
         .catch(err => console.log(err))
 }
 
-// Main function for updating the UI from read view to create view
+// Main function for updating the UI from read view to create view or update view
 
 function toggleView(action) {
 
@@ -69,7 +102,7 @@ function toggleView(action) {
 
     }
 
-    else if (action=='update'){
+    else if (action == 'update') {
 
         document.getElementById('container').innerHTML += `
             <form>
@@ -79,7 +112,7 @@ function toggleView(action) {
                 <input  id="task" value="${todoToUpdate[0]}"/>
                 <label for="status">Status</label>
                 <input id="status" value="${todoToUpdate[1]}"/>
-                <button id="submit-todo" type="submit">Update</button>
+                <button id="submit-todo" onclick="submitUpdateTodo(${todoToUpdate[2]})" type="button">Update</button>
                 <p id="back-button" onclick="toggleView('back');"><< Go Back </p>
             </form>
             `
@@ -124,7 +157,7 @@ function deleteTodo(todoId) {
         method: 'DELETE'
     })
         .then(res => res.json())
-        .then(res => {if (res.msg) {getData()} else {alert(res.error)}})
+        .then(res => { if (res.msg) { getData() } else { alert(res.error) } })
         .catch(err => console.log(err))
 }
 
@@ -136,7 +169,7 @@ function getData() {
 
     fetch(`http://127.0.0.1:8000/todos/read?page=${page}`)
         .then(res => res.json())
-        .then(res => {allTodos = res.todos; showData(res)})
+        .then(res => { allTodos = res.todos; showData(res) })
         .catch(err => console.log(err))
 }
 

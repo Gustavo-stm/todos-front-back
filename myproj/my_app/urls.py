@@ -7,4 +7,5 @@ urlpatterns = [
     path('read', views.getTodos),
     path('create', views.createTodo),
     path('delete', views.deleteTodo),
+    path('update', views.updateTodo)
 ]

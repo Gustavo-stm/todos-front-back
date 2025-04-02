@@ -16,6 +16,41 @@ def initiateDb():
     return cur,connexion
 
 @csrf_exempt
+def updateTodo(req):
+
+    id = req.GET.get('id')
+
+    body = json.loads(req.body)
+
+    task = body['task']
+    prio = body['prio']
+    status = body['status']
+    
+    cur, connexion = initiateDb()
+
+    try:
+        
+        potentialTodo = cur.execute(f"SELECT * FROM mytodos WHERE id={id}")
+        potentialTodo = potentialTodo.fetchone()
+        
+        if potentialTodo:
+            query = f"UPDATE mytodos SET task='{task}', done='{status}', priority='{prio}' WHERE id={id}"
+            cur.execute(query)
+            connexion.commit()
+            connexion.close()
+            return HttpResponse(json.dumps({'msg':'Successfully updated product'}))
+        else:
+            raise ValueError('Id not existing')
+    
+    except ValueError as e:
+        connexion.close()
+        response_data = {
+            "error": f"{e}"
+        }
+        return JsonResponse(response_data, status=400)
+
+
+@csrf_exempt
 def deleteTodo(req):
     
     id = req.GET.get('id')
