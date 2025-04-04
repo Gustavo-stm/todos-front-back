@@ -191,7 +191,7 @@ function showData(data) {
     document.getElementById('todos').innerHTML = ""
     data = data.todos
     data.forEach(el => {
-        document.getElementById('todos').innerHTML += `<li class="todo">${el[0]} - ${el[1]} - Priority${el[4]}
+        document.getElementById('todos').innerHTML += `<li class="todo"><p>${el[0]} - ${el[1]} - Priority${el[4]}</p>
             <button onsubmit="return false;" class="icon-button" type="button" onclick="deleteTodo(${el[2]})">
                 <i id="delete-${el[2]}"  class="fa-solid fa-trash"></i>
             </button>

@@ -55,38 +55,36 @@ form {
     background-color: rgba(247, 240, 240, 0.7);
     margin: 0 20px 0 0;
     z-index: 5;
-}
 
-button {
-    margin-left: 10px;
-    color: white;
-    background-color: darkgreen;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.8em;
-
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(37, 167, 37);
-        ;
-    }
-}
-
-input {
-    border-radius: 5px;
-    padding: 6px 0px;
-    border: 0.5px solid lightgrey;
-    box-shadow: 2px 4px 8px lightgrey;
-    ;
-
-    &:focus {
-        outline: 1px solid lightgrey;
-    }
-
-    &::placeholder {
+    & button {
+        margin-left: 0 auto;
+        color: white;
+        background-color: darkgreen;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
         font-size: 0.8em;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(37, 167, 37);
+        }
+    }
+
+    & input {
+        border-radius: 5px;
+        padding: 6px 0px;
+        border: 0.5px solid lightgrey;
+        box-shadow: 2px 4px 8px lightgrey;
         ;
+
+        &:focus {
+            outline: 1px solid lightgrey;
+        }
+
+        &::placeholder {
+            font-size: 0.8em;
+        }
     }
 }
 
@@ -124,7 +122,7 @@ li {
     background-color: rgb(178, 160, 160);
     margin-bottom: 10px;
     border-radius: 4px;
-    padding: 5px 10px;
+    padding: 10px 10px;
     font-size: 0.7em;
     width: 250px;
     box-shadow: 2px 2px 2px lightgrey;
@@ -134,39 +132,45 @@ li {
     display: flex;
     align-items: center;
 
+    & p {
+        max-width: 80%;
+        margin: 0;
+    }
+
     &:hover {
         cursor: pointer;
         color: grey;
         background-color: lightgrey;
         transform: scale(1.005);
     }
-}
 
-button.icon-button{
-    
-    padding: 3px;
-    width:20px;
-    height:20px;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 3px;
-    margin-left:5px;
+    & button.icon-button {
 
-    &:hover {
-        cursor: pointer;
-        background-color: white;
-    }
+        padding: 3px;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 3px;
+        margin-left: 5px;
 
-    &:first-child{
-        color: rgb(156, 50, 50);
-        right: 25px;
-        border: 0.5px solid red;
-    }
-    &:nth-child(even){
-        right:0px;
-        color: rgb(78, 130, 148);
-        border: 0.5px solid rgb(78, 130, 148);
-        margin-right:3px;
+        &:hover {
+            cursor: pointer;
+            background-color: white;
+        }
+
+        &:nth-child(odd) {
+            color: rgb(156, 50, 50);
+            right: 35px !important;
+            border: 0.5px solid red;
+        }
+
+        &:nth-child(even) {
+            right: 0px;
+            color: rgb(78, 130, 148);
+            border: 0.5px solid rgb(78, 130, 148);
+            margin-right: 3px;
+        }
     }
 }
 
@@ -177,7 +181,6 @@ button.icon-button{
 }
 
 h2,
-p,
 label,
 input,
 button {
